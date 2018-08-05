@@ -2,8 +2,10 @@ package tests.parseTreeToAST;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ast.ASTNodeBuilder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.junit.Test;
 
@@ -235,5 +237,28 @@ public class ModuleBuildersTest
 		parser.parseAndWalkTokenStream(tokens);
 		return testProcessor.codeItems;
 	}
+
+    private List<ASTNode> parseInput2(String input)
+    {
+        ANTLRCModuleParserDriver parser = new ANTLRCModuleParserDriver();
+
+        ANTLRInputStream inputStream = new ANTLRInputStream(input);
+        ModuleLexer lex = new ModuleLexer(inputStream);
+        TokenSubStream tokens = new TokenSubStream(lex);
+
+        parser.parseAndWalkTokenStream(tokens);
+        List<ASTNode> nodes = new ArrayList<>();
+        for (ASTNodeBuilder builder : parser.builderStack) {
+            nodes.add(builder.getItem());
+        }
+        return nodes;
+    }
+
+    public static void main(String[] args) {
+        String input = "class foo{int x;} y;";
+        List<ASTNode> nodes1 = new ModuleBuildersTest().parseInput(input);
+        List<ASTNode> nodes2 = new ModuleBuildersTest().parseInput2(input);
+        System.out.println(nodes1.size() == nodes2.size());
+    }
 
 }

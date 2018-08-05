@@ -32,7 +32,13 @@ import databaseNodes.FileDatabaseNode;
 
 public class ASTNodeVisitor
 {
+	/**
+	 * 记录当前正在访问的文件
+	 */
 	protected FileDatabaseNode currentFileNode;
+	/**
+	 * 好像是为了处理类的嵌套定义，只在Neo4JASTNodeVisitor中访问了这个变量
+	 */
 	protected Stack<Long> contextStack;
 
 	public void handleStartOfUnit(FileDatabaseNode aCurrentFileNode)

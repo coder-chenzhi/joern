@@ -4,6 +4,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ParseTreeUtils
 {
+	/**
+	 * 获取当前节点的子树的字符串表示
+	 * @param ctx
+	 * @return
+	 */
 	public static String childTokenString(ParseTree ctx)
 	{
 		// TODO: Optimize this. Strings are immutable

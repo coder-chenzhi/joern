@@ -6,6 +6,9 @@ import java.util.List;
 import ast.ASTNode;
 import ast.walking.ASTNodeVisitor;
 
+/**
+ * 复合语句
+ */
 public class CompoundStatement extends Statement
 {
 	protected static final List<ASTNode> emptyList = new LinkedList<ASTNode>();
