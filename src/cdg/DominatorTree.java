@@ -19,7 +19,7 @@ public class DominatorTree<V>
 
 	private HashMap<V, V> dominators;
 	private HashMap<V, Set<V>> dominanceFrontiers;
-	private HashMap<V, Integer> postorderEnumeration;
+	private HashMap<V, Integer> postorderEnumeration; // key is the node, value is the index in post-order traverse
 
 	private DominatorTree()
 	{
@@ -49,6 +49,12 @@ public class DominatorTree<V>
 		return dominanceFrontiers.get(vertex);
 	}
 
+
+    /**
+     * find common Dominator of multiple vertices
+     * @param vertices
+     * @return
+     */
 	private V commonDominator(List<V> vertices)
 	{
 		Deque<V> stack = new LinkedList<V>();
@@ -70,6 +76,12 @@ public class DominatorTree<V>
 		return stack.pop();
 	}
 
+	/**
+	 * find the common Dominator of vertex1 and vertex2
+	 * @param vertex1
+	 * @param vertex2
+	 * @return
+	 */
 	private V commonDominator(V vertex1, V vertex2)
 	{
 		V finger1 = vertex1;
@@ -101,6 +113,12 @@ public class DominatorTree<V>
 		return false;
 	}
 
+	/**
+	 *
+	 * @param vertex
+	 * @param dominator
+	 * @return if dominator changed
+	 */
 	private boolean setDominator(V vertex, V dominator)
 	{
 		boolean changed = false;
@@ -153,9 +171,13 @@ public class DominatorTree<V>
 
 		public DominatorTree<V> create()
 		{
+			// get post order vertices list
 			enumerateVertices();
+			// initialize Dominator Tree
 			initializeDominatorTree();
+
 			buildDominatorTree();
+
 			determineDominanceFrontiers();
 			return dominatorTree;
 		}
@@ -193,26 +215,36 @@ public class DominatorTree<V>
 			}
 		}
 
+		/**
+		 * build Dominator Tree, using the method developed by
+         * Cooper, Keith D., Timothy J. Harvey, and Ken Kennedy. "A simple, fast dominance algorithm."
+         * Software Practice & Experience 4.1-10 (2001): 1-8.
+		 */
 		private void buildDominatorTree()
 		{
 			boolean changed = true;
+			// iterate until dominators remain unchanged
 			while (changed)
 			{
 				changed = false;
 
+				// reverse post-order, from top to bottom
 				ListIterator<V> reverseVertexIterator = orderedVertices
 						.listIterator(orderedVertices.size());
 				// Skip the root
 				reverseVertexIterator.previous();
 
+				// iterate each node
 				while (reverseVertexIterator.hasPrevious())
 				{
 					V currentNode = reverseVertexIterator.previous();
 					List<V> list = new LinkedList<V>();
+					// get the parent nodes
 					for (Edge<V> edge : graph.ingoingEdges(currentNode))
 					{
 						list.add(edge.getSource());
 					}
+					// find the common dominator of these parent nodes
 					V newIdom = dominatorTree.commonDominator(list);
 					dominatorTree.addVertex(currentNode);
 					if (dominatorTree.setDominator(currentNode, newIdom))
@@ -223,6 +255,9 @@ public class DominatorTree<V>
 			}
 		}
 
+		/**
+		 * return post-order vertices list
+		 */
 		private void enumerateVertices()
 		{
 			int counter = 0;

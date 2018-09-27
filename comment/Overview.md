@@ -69,7 +69,7 @@ CModuleParserTreeListener，将ParserTree转化为AST
 
 
 ## fileWalker包
-fileWalker包是一些文件遍历相关的类
+fileWalker包是一些文件遍历相关的类  
 FileNameMatcher是用于过滤文件的，默认是匹配.c/.h/.cpp/.hpp/.java文件，通常是作为Walker的一个成员变量，
 由Walker调用来判断是否需要访问这个文件
 SourceFileListener是监听访问目录的一些行为，如进入目录、离开目录、访问文件等，将Listener注册到Walker，
@@ -93,4 +93,28 @@ CFGImporter cfgImporter = new CFGImporter(nodeStore);
 UDGImporter udgImporter = new UDGImporter(nodeStore);
 DDGImporter ddgImporter = new DDGImporter(nodeStore);
 CDGImporter cdgImporter = new CDGImporter(nodeStore);
+```
+所以Control Flow Graph、Use Define Graph、Data Dependency Graph和Control Dependency Graph都是针对方法来说的啊
+
+这里还涉及到FunctionDatabaseNode类，它是以上这些中间表示的Container，并作为它的成员变量存在
+```
+FunctionDef astRoot;
+CFG cfg;
+UseDefGraph udg;
+DDG ddg;
+CDG cdg;
+```
+这些数据结构是通过下面的方法得到的，好像只需要提供当前方法的ASTNode，就可以得到其他中间表示
+```
+public void initialize(Object node)
+{
+    astRoot = (FunctionDef) node;
+    cfg = astToCFG.convert(astRoot);
+    udg = cfgToUDG.convert(cfg);
+    DefUseCFG defUseCFG = udgAndCfgToDefUseCFG.convert(cfg, udg);
+    ddg = ddgCreator.createForDefUseCFG(defUseCFG);
+    cdg = cdgCreator.create(cfg);
+
+    setSignature(astRoot);
+}
 ```

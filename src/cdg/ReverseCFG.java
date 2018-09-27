@@ -8,9 +8,6 @@ import cfg.nodes.CFGNode;
 /**
  * A reverse control flow graph augmented with an edge from the exit node to the
  * start node.
- * 
- * @param <V>
- *            the vertex type
  */
 public class ReverseCFG extends AbstractTwoWayGraph<CFGNode, CFGEdge>
 {

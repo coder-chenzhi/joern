@@ -44,7 +44,7 @@ public class MultiHashMap<K, V>
 	 * @param key
 	 *            key with which the specified value is to be associated
 	 * 
-	 * @param values
+	 * @param value
 	 *            value to be associated with the specified key
 	 */
 	public void add(K key, V value)

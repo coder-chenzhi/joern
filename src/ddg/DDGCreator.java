@@ -10,6 +10,9 @@ import ddg.DefUseCFG.BatchInserterFactory;
 import ddg.DefUseCFG.DefUseCFG;
 import ddg.DefUseCFG.DefUseCFGFactory;
 
+/**
+ * Data Dependency Tree
+ */
 public class DDGCreator
 {
 

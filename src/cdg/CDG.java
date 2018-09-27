@@ -6,6 +6,9 @@ import java.util.Set;
 
 import cfg.nodes.CFGNode;
 
+/**
+ * Control Dependency Tree
+ */
 public class CDG extends AbstractGraph<CFGNode, CDGEdge>
 {
 

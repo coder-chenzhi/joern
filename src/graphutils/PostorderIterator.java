@@ -6,6 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * post-order iterator, children first, parent last
+ * @param <V>
+ * @param <E>
+ */
 public class PostorderIterator<V, E extends Edge<V>> implements Iterator<V>
 {
 

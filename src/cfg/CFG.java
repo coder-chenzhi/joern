@@ -17,10 +17,10 @@ import cfg.nodes.CFGNode;
 
 public class CFG extends AbstractTwoWayGraph<CFGNode, CFGEdge>
 {
-	private CFGEntryNode entry;
-	private CFGExitNode exit;
+	private CFGEntryNode entry; // required node
+	private CFGExitNode exit;  // required node
 	private CFGErrorNode error;
-	private List<CFGNode> parameters;
+	private List<CFGNode> parameters; // all parameters of the method is taken as a CFG Node
 	
 	public CFG()
 	{
@@ -69,13 +69,21 @@ public class CFG extends AbstractTwoWayGraph<CFGNode, CFGEdge>
 	{
 		return parameters;
 	}
-	
+
+	/**
+	 *
+	 * @param otherCFG
+	 */
 	public void addCFG(CFG otherCFG)
 	{
 		addVertices(otherCFG);
 		addEdges(otherCFG);
 	}
 
+    /**
+     * append otherCFG to the end of this CFG
+     * @param otherCFG
+     */
 	public void appendCFG(CFG otherCFG)
 	{
 		addCFG(otherCFG);
@@ -98,6 +106,13 @@ public class CFG extends AbstractTwoWayGraph<CFGNode, CFGEdge>
 		}
 	}
 
+    /**
+     * mount cfg between beanchNode and mergeNode
+     * @param branchNode
+     * @param mergeNode
+     * @param cfg
+     * @param label
+     */
 	public void mountCFG(CFGNode branchNode, CFGNode mergeNode, CFG cfg,
 			String label)
 	{

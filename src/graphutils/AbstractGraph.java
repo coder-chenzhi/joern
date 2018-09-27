@@ -169,7 +169,7 @@ public abstract class AbstractGraph<V, E extends Edge<V>>
 				+ numberOfEdges() + " edges:\n";
 		for (V vertex : getVertices())
 		{
-			res += vertex.toString() + '\n';
+			res += vertex.toString() + " with "+ outgoingEdges(vertex).size() + " edges\n";
 			for (E edge : outgoingEdges(vertex))
 			{
 				res += edge.toString() + '\n';

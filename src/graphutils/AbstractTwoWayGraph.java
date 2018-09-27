@@ -29,6 +29,7 @@ public abstract class AbstractTwoWayGraph<V, E extends Edge<V>> extends
 		return ingoingEdges(vertex).size();
 	}
 
+	@Override
 	public void addEdge(E edge)
 	{
 		super.addEdge(edge);
